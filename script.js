@@ -4,7 +4,7 @@ let item1234 = {
     price : 650,
     stock : 10,
     photo : "/Assets/Images/mackintosh-drumming-orange-dry-waxed-cotton-hooded-jacket-gmm-200_15481794_30254686_1000.png"
-}
+};
 
 // functions to be carried out on page load
 
@@ -31,14 +31,14 @@ function addEventListeners() {
     // add to basket button
     const addToBasketButton = document.getElementById("addToBasket");
     addToBasketButton.addEventListener("click", addToBasket);
-}
+};
 
 // function to format price for display
 
 function formatPrice(amount) {
     const price = Number.parseFloat(amount).toFixed(2);
     return `£${price}`;
-}
+};
 
 // function to update the page title based on the item's name
 
@@ -70,7 +70,7 @@ function changeNumberToAdd(button, stock) {
         };
     }
     document.getElementById("numberToAdd").textContent = numberToAdd;
-}
+};
 
 // function to add items to basket
 
@@ -94,7 +94,7 @@ function addToBasket() {
     
     document.getElementById("numberToAdd").textContent = 1;
     updateBasketTotal();
-}
+};
 
 // function to update total items in basket
 
@@ -102,19 +102,35 @@ function updateBasketTotal() {
     const arrayOfItemNumbers = Object.values(basket);
     const basketTotal = arrayOfItemNumbers.reduce((sum, current) => sum + current, 0);
     const basketCounter = document.getElementById("amountInBasket");
+    const previousBasketTotal = parseInt(basketCounter.textContent);
     basketCounter.textContent = basketTotal;
-    animateBasket();
-}
+    if (basketTotal > previousBasketTotal) {
+        animateBasket("success");
+    } else {
+        animateBasket("fail");
+    }
+};
 
-// function to highlight basket with colour change on submission
+// function to highlight basket with colour change on submission - red if no more items can be added
 
-function animateBasket() {
+function animateBasket(successCheck) {
     const basketCounter = document.getElementById("amountInBasket");
     const accentColorOne = getComputedStyle(document.documentElement)
     .getPropertyValue("--accent-color-one");
     const accentColorTwo = getComputedStyle(document.documentElement)
     .getPropertyValue("--accent-color-two");
-    basketCounter.animate([{backgroundColor: accentColorTwo}, {backgroundColor: accentColorOne}], {duration: 500, fill: "forwards"}).onfinish = function() {
-    basketCounter.style.backgroundColor = accentColorOne;
-  };
-}
+    const accentColorThree = getComputedStyle(document.documentElement)
+    .getPropertyValue("--accent-color-three");
+    
+    function animate(color) {
+        basketCounter.animate([{backgroundColor: color}, {backgroundColor: accentColorOne}], {duration: 500, fill: "forwards"}).onfinish = function() {
+            basketCounter.style.backgroundColor = accentColorOne;
+        };
+    };
+
+    if(successCheck === "success") {
+        animate(accentColorTwo)
+    } else {
+        animate(accentColorThree)
+    };
+};
