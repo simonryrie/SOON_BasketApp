@@ -1,23 +1,31 @@
-// functions to be carried out on load
+let item1234 = {
+    name : "Waxed Cotton Hooded Jacket",
+    description : "The Drumming jacket in orange is finished with a water-repellent dry wax treatment that creates a love-worn look. It's made in the United Kingdom using organic cotton ripstop with a drawstring hood, underarm eyelets and buttoned flap front pockets. Shoulder epaulettes add a utilitarian twist, while a fly-fronted zip and snap-button closure keeps the overall look streamlined. Attach one of the collection's padded liners to the internal tab on cooler days.",
+    price : 650,
+    stock : 10,
+    photo : "/Assets/Images/mackintosh-drumming-orange-dry-waxed-cotton-hooded-jacket-gmm-200_15481794_30254686_1000.png"
+}
+
+// functions to be carried out on page load
 
 window.onload = () => {
-    updatePageTitle();
+    updatePage(item1234);
     addEventListeners();
 };
 
 // declare basket (local storage functionality added later)
 
-let basket = {
-}
+let basket = {};
 
 // function to add all event listeners
 
 function addEventListeners() {
     // plus or minus buttons
     const plusOrMinusButtons = document.getElementsByClassName("plus-minus");
+    const stock = item1234.stock;
     for (let i = 0; i < plusOrMinusButtons.length; i++) {
-      plusOrMinusButtons[i].addEventListener("click", function() {
-        changeNumberToAdd(this);
+        plusOrMinusButtons[i].addEventListener("click", function() {
+        changeNumberToAdd(this, stock);
       });
     }
     // add to basket button
@@ -25,27 +33,41 @@ function addEventListeners() {
     addToBasketButton.addEventListener("click", addToBasket);
 }
 
+// function to format price for display
+
+function formatPrice(amount) {
+    const price = Number.parseFloat(amount).toFixed(2);
+    return `£${price}`;
+}
+
 // function to update the page title based on the item's name
 
-function updatePageTitle() {
-    const itemName = document.getElementById("itemName").textContent;
+function updatePage(item) {
+    const itemName = item.name;
+    const itemDescription = item.description;
+    const itemPrice = formatPrice(item.price);
+    const stock = `${item.stock} in stock`;
+    const photoURL = item.photo;
+    document.getElementById("itemPhoto").src = photoURL;
     document.getElementById("title").textContent = itemName;
+    document.getElementById("itemName").textContent = itemName;
+    document.getElementById("description").textContent = itemDescription;
+    document.getElementById("price").textContent = itemPrice;
+    document.getElementById("numberInStock").textContent = stock;
 };
 
 // function to increment the number of items to add
 
-function changeNumberToAdd(button) {
+function changeNumberToAdd(button, stock) {
     let numberToAdd = parseInt(document.getElementById("numberToAdd").textContent);
-    const numberInStockText = document.getElementById("numberInStock").textContent;
-    const numberInStock = parseInt(numberInStockText.match(/\d+/)[0]);
     if (button.textContent == "+") {
-        if (numberToAdd < numberInStock) {
+        if (numberToAdd < stock) {
             numberToAdd++;
-        }
+        };
     } else if (button.textContent == "—") {
         if (numberToAdd > 1) {
             numberToAdd--;
-        }
+        };
     }
     document.getElementById("numberToAdd").textContent = numberToAdd;
 }
@@ -53,10 +75,9 @@ function changeNumberToAdd(button) {
 // function to add items to basket
 
 function addToBasket() {
-    const itemName = document.getElementById("itemName").textContent;
+    const itemName = item1234.name;
     let numberToAdd = parseInt(document.getElementById("numberToAdd").textContent);
-    const numberInStockText = document.getElementById("numberInStock").textContent;
-    const numberInStock = parseInt(numberInStockText.match(/\d+/)[0]);
+    const numberInStock = item1234.stock;
     
     if (basket[itemName]) {
         const totalNumber = basket[itemName] + numberToAdd;
@@ -72,7 +93,6 @@ function addToBasket() {
     }
     
     document.getElementById("numberToAdd").textContent = 1;
-
     updateBasketTotal();
 }
 
