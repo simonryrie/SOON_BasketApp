@@ -1,5 +1,4 @@
 
-
 function deleteAllCookies() {
     const cookies = document.cookie.split(";");
 
