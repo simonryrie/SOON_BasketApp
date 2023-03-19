@@ -3,7 +3,7 @@ let item1234 = {
     description : "The Drumming jacket in orange is finished with a water-repellent dry wax treatment that creates a love-worn look. It's made in the United Kingdom using organic cotton ripstop with a drawstring hood, underarm eyelets and buttoned flap front pockets. Shoulder epaulettes add a utilitarian twist, while a fly-fronted zip and snap-button closure keeps the overall look streamlined. Attach one of the collection's padded liners to the internal tab on cooler days.",
     price : 650,
     stock : 10,
-    photo : "/Assets/Images/mackintosh-drumming-orange-dry-waxed-cotton-hooded-jacket-gmm-200_15481794_30254686_1000.png"
+    photo : "./Assets/Images/mackintosh-drumming-orange-dry-waxed-cotton-hooded-jacket-gmm-200_15481794_30254686_1000.PNG"
 };
 
 // functions to be carried out on page load
