@@ -12,5 +12,3 @@ A simple shopping app that allows the user to:
 git clone https://github.com/simonryrie/SOON_BasketApp
 ```
 2. Launch the site using the [VS Code LiveServer extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-
-You can also view the deployed site via [GitHub Pages](simonryrie.github.io/SOON_BasketApp/)
